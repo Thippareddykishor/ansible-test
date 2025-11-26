@@ -14,4 +14,4 @@
     state: present
   
 - name: load master data
-  ansible.builtin.shell: mongosh --host mongodb--dev.kommanuthala.store < /app/db/master-data.js
+  ansible.builtin.shell: mongosh --host mongodb-dev.kommanuthala.store < /app/db/master-data.js
