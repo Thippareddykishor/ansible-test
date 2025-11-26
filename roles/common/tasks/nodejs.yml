@@ -12,8 +12,9 @@
     file: artifact_download.yml
 
 - name: install node js dependencies
-  ansible.builtin.shell:
-    npm install
+  ansible.builtin.shell: npm install
+  args:
+    chdir: /app
 
 - name: include systemd
   ansible.builtin.include_tasks:
