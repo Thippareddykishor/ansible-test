@@ -9,7 +9,7 @@
 
 - name: install maven dependencies
   ansible.builtin.shell:
-    mvn clean package
+    mvn clean package ; 
     mv target/{{ component_name }}-1.0.jar {{ component_name }}.jar
   args:
     chdir: /app
