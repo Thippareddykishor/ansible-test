@@ -3,8 +3,8 @@ Description=Shipping Service
 
 [Service]
 User=roboshop
-Environment=CART_ENDPOINT=cart-dev.kommanuthala.store:8080
-Environment=DB_HOST=mysql-dev.kommanuthala.store
+Environment=CART_ENDPOINT=cart-{{ env }}.kommanuthala.store:8080
+Environment=DB_HOST=mysql-{{ env }}.kommanuthala.store
 ExecStart=/bin/java -jar /app/shipping.jar
 SyslogIdentifier=shipping
 
