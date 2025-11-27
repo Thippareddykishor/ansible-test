@@ -1,6 +1,6 @@
 - name: install Maven
   ansible.builtin.dnf:
-    name: Maven
+    name: 'maven'
     state: present
 
 - name: include artifact download
