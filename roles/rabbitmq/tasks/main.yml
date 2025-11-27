@@ -5,13 +5,14 @@
 
 - name: install rabbit mq server
   ansible.builtin.dnf:
-    name: rabbitmq.server
+    name: rabbitmq-server
     state: present
 
 - name: start Rabbitmq service
   ansible.builtin.systemd_service:
     name: rabbitmq-server
     state: restart
-
+    enabled: true
+    
 - name: add application user
   ansible.builtin.shell: rabbitmqctl add_user roboshop roboshop123; rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
