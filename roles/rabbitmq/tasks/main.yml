@@ -11,8 +11,8 @@
 - name: start Rabbitmq service
   ansible.builtin.systemd_service:
     name: rabbitmq-server
-    state: restart
+    state: restarted
     enabled: true
-    
+
 - name: add application user
   ansible.builtin.shell: rabbitmqctl add_user roboshop roboshop123; rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
