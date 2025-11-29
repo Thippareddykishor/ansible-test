@@ -1,12 +1,12 @@
 [Unit]
 Description = {{ component_name | title }} Service
 [Service]
-User=roboshop
+User={{ service_username }}
 WorkingDirectory=/app
 {% for item in component_secrets | dict2items %}
 Environment={{ item.key }}={{ item.value }}
 {% endfor %}
-ExecStart=/bin/node /app/server.js
+ExecStart={{ service_start_command }}
 SyslogIdentifier=cart
 
 [Install]
