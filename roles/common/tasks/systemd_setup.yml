@@ -1,6 +1,11 @@
-- name: return secrets as a dict 
+# - name: return secrets as a dict 
+#   ansible.builtin.set_fact:
+#     component_secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault.kommanuthala.store:8200') }}"
+
+- name: Get secrets for this app
   ansible.builtin.set_fact:
-    component_secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault.kommanuthala.store:8200') }}"
+    component_secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault-internal.kommanuthala.store:8200') }}"
+
 
 - name: copy systemd service file
   ansible.builtin.template:
