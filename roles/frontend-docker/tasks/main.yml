@@ -1,0 +1,51 @@
+- name: Disable default nginx
+  ansible.builtin.shell: dnf module disable nginx -y
+
+- name: enable nginx 24
+  ansible.builtin.shell: dnf module enable nginx:1.24 -y
+
+- name: install nginx
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+
+# - name: get secrets
+#   ansible.builtin.set_fact:
+#     # secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault.kommanuthala.store:8200') }}"
+#     secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault-internal.kommanuthala.store:8200') }}"
+- name: get secrets
+  ansible.builtin.set_fact:
+    secrets: "{{ lookup(
+        'community.hashi_vault.hashi_vault',
+        'roboshop-' ~ env ~
+        '/data/' ~ component_name ~
+        ' token=' ~ vault_token ~
+        ' url=http://vault.kommanuthala.store:8200') }}"
+
+
+- name: copy nginx config file
+  ansible.builtin.template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: remove old app content
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: absent
+
+- name: create app content diretory
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: directory
+
+- name: download and extract app content
+  ansible.builtin.unarchive:
+    src: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+    dest: /usr/share/nginx/html
+    remote_src: yes
+
+- name: start nginx
+  ansible.builtin.systemd_service:
+    name: nginx
+    state: restarted
+    enabled: true
