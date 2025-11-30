@@ -9,10 +9,19 @@
     name: nginx
     state: present
 
+# - name: get secrets
+#   ansible.builtin.set_fact:
+#     # secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault.kommanuthala.store:8200') }}"
+#     secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault-internal.kommanuthala.store:8200') }}"
 - name: get secrets
   ansible.builtin.set_fact:
-    # secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault.kommanuthala.store:8200') }}"
-    secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'roboshop-{{ env }}/data/{{ component_name }} token={{ vault_token }} url=http://vault-internal.kommanuthala.store:8200') }}"
+    secrets: "{{ lookup(
+        'community.hashi_vault.hashi_vault',
+        'roboshop-' ~ env ~
+        '/data/' ~ component_name ~
+        ' token=' ~ vault_token ~
+        ' url=http://vault.kommanuthala.store:8200') }}"
+
 
 - name: copy nginx config file
   ansible.builtin.template:
