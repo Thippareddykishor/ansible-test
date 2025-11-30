@@ -1,18 +1,4 @@
-- name: load maven
+- name: load docker
   ansible.builtin.include_role:
     name: common
-    tasks_from: maven
-  
-- name: Install Mysql client
-  ansible.builtin.dnf:
-    name: mysql
-    state: present
-
-- name: load schema
-  ansible.builtin.shell: mysql -h mysql-dev.kommanuthala.store -uroot -pRoboShop@1 < /app/db/schema.sql
-
-- name: load user creation
-  ansible.builtin.shell: mysql -h mysql-dev.kommanuthala.store -uroot -pRoboShop@1 < /app/db/app-user.sql
-
-- name: load master data
-  ansible.builtin.shell: mysql -h mysql-dev.kommanuthala.store -uroot -pRoboShop@1 < /app/db/master-data.sql
+    tasks_from: docker

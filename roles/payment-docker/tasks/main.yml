@@ -1,4 +1,4 @@
-- name: load python
+- name: load docker
   ansible.builtin.include_role:
     name: common
-    tasks_from: python
+    tasks_from: docker
