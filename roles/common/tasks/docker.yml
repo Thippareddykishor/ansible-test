@@ -1,7 +1,7 @@
 - name: download docker file
   ansible.builtin.get_url:
     url: https://download.docker.com/linux/rhel/docker-ce.repo
-    dest: /etc/yum.repos.d/docker
+    dest: /etc/yum.repos.d/docker.repo
 
 - name: install docker
   ansible.builtin.dnf:
